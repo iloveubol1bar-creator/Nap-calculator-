@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Nap Calculator - Find the perfect nap duration for better health and productivity.">
+    <meta name="keywords" content="nap calculator, sleep calculator, power nap, sleep cycle">
+    <meta name="author" content="Rajpoot Sons">
+    <title>Nap Calculator | Perfect Nap Time Finder</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 500px;
+            margin: auto;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 20px;
+            border-radius: 10px;
+        }
+        h1 {
+            font-size: 2em;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px;
+            border-radius: 5px;
+            border: none;
+        }
+        input {
+            width: 80%;
+            font-size: 1em;
+        }
+        button {
+            background: #ff9800;
+            color: #fff;
+            cursor: pointer;
+            font-size: 1em;
+        }
+        button:hover {
+            background: #e68900;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        footer {
+            margin-top: 20px;
+            font-size: 0.8em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Nap Calculator</h1>
+        <p>Find your perfect nap duration for better focus and energy.</p>
+        
+        <label for="startTime">When do you want to wake up?</label><br>
+        <input type="time" id="wakeTime"><br>
+        <button onclick="calculateNap()">Calculate Nap Time</button>
+        
+        <div class="result" id="result"></div>
+    </div>
+    <footer>
+        &copy; 2025 Rajpoot Sons | Nap Calculator
+    </footer>
+    
+    <script>
+        function calculateNap() {
+            let wakeTime = document.getElementById("wakeTime").value;
+            if (!wakeTime) {
+                document.getElementById("result").innerText = "Please enter your wake-up time.";
+                return;
+            }
+            let [hours, minutes] = wakeTime.split(":").map(Number);
+            let napDurations = [20, 90]; // Power nap and full sleep cycle in minutes
+
+            let results = napDurations.map(duration => {
+                let totalMinutes = hours * 60 + minutes - duration;
+                if (totalMinutes < 0) totalMinutes += 24 * 60;
+                let napHours = Math.floor(totalMinutes / 60);
+                let napMinutes = totalMinutes % 60;
+                return `${String(napHours).padStart(2, '0')}:${String(napMinutes).padStart(2, '0')} for a ${duration}-minute nap`;
+            });
+
+            document.getElementById("result").innerHTML = `
+                Best nap start times:<br>
+                ${results.join("<br>")}
+            `;
+        }
+    </script>
+</body>
+</html>
